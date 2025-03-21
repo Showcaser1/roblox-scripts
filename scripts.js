@@ -7,18 +7,21 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            // Loop through the files and create buttons
+            // Loop through the files and create buttons for .txt files
             data.forEach(item => {
-                if (item.name.endsWith('.txt')) {
+                if (item.name.endsWith('.txt')) { // Only show .txt files
                     const button = document.createElement('button');
                     button.textContent = item.name;
                     button.onclick = () => downloadScript(item.download_url);
                     scriptButtonsContainer.appendChild(button);
                 }
             });
+        })
+        .catch(error => {
+            console.error('Error fetching files from GitHub API:', error);
         });
 
-    // Function to download script
+    // Function to download the script
     function downloadScript(url) {
         window.location.href = url;
     }
